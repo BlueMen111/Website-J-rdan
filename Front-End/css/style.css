@@ -28,7 +28,7 @@ nav {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   height: 100%;
-  padding: 0 109px;         /* laterais do nav */
+  padding: 0 15px;         /* laterais do nav */
   column-gap: 12px;
 }
 
@@ -93,11 +93,14 @@ section {
   min-height: 350px;
 }
 
+
+
 #sobre {
   justify-content: center;
   align-items: center;
   display: flex;
   height: 600px;
+  padding-left: 25px;
 }
 
 .sobre-conteudo {
@@ -445,3 +448,67 @@ code {
 }
 
 li, dd { font-size: 16px; color: #494848;}
+
+.footer {
+  text-align: center;
+  background-color: #ffffff;
+  color: #494848;
+  width: 100%;
+}
+
+/* limite global de largura + espaçamento lateral fluido */
+.container{                     /* trava o “miolo” do site */
+  margin-inline: auto;
+  max-width:32000px; margin:0 auto; padding-inline: clamp(16px, 6vw, 120px); 
+}
+
+/* como o header é fixed, mantenha a largura visual alinhada ao container */
+header { background:#1b1b1b; }
+header > .container { height: var(--header-h); }
+
+/* o seu nav já usa grid; só removemos o padding interno dele,
+   pois agora o espaçamento vem do .container */
+
+/* ícone hamburguer */
+.hamburger{
+  display:none;                 /* some no desktop */
+  width:40px; height:40px; border:0; background:transparent; cursor:pointer;
+  position:relative;
+}
+.hamburger span{
+  position:absolute; left:8px; right:8px; height:2px; background:#fff; transition:.25s;
+}
+.hamburger span:nth-child(1){ top:12px; }
+.hamburger span:nth-child(2){ top:19px; }
+.hamburger span:nth-child(3){ top:26px; }
+.hamburger.is-open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.hamburger.is-open span:nth-child(2){ opacity:0; }
+.hamburger.is-open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+/* drawer lateral (off-canvas) */
+.drawer{
+  position: fixed; top:0; right:-320px; width:320px; height:100dvh;
+  background:#fff; color:#374151; box-shadow:0 10px 30px rgba(0,0,0,.2);
+  display:flex; flex-direction:column; gap:8px; padding:16px;
+  transition:right .25s ease; z-index:1001;
+}
+.drawer.open{ right:0; }
+.drawer-header{ display:flex; justify-content:space-between; align-items:center; font-size:1.1rem; }
+.drawer-close{ border:0; background:transparent; font-size:1.8rem; cursor:pointer; color:#374151; }
+.drawer-links{ display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+.drawer-links a{ color:#374151; text-decoration:none; font-weight:700; padding:10px 12px; border-radius:8px; }
+.drawer-links a:hover{ background:#f3f4f6; }
+.drawer-cta{ background:#ffffff; text-align:center; }
+.drawer-cta:hover{background:#f3f4f6; }
+/* overlay */
+.backdrop{
+  position: fixed; inset:0; background:rgba(0,0,0,.4); z-index:1000;
+}
+
+/* Breakpoint: esconde menu desktop e mostra o hamburguer */
+@media (max-width: 900px){
+  .menu-links, .right-actions { display:none; }
+  .hamburger{ display:block; }
+  /* opcional: aumenta a altura do header se precisar */
+  :root { --header-h: 80px; }
+}
